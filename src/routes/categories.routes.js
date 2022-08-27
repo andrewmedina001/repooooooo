@@ -11,11 +11,11 @@ export const categoriesRouter = Router()
 
 categoriesRouter
   .route("/categories")
-  .get(getCategories)
-  .post(postCategory)
+    .get(getCategories)
+    .post(postCategory)
 
 categoriesRouter
   .route("/categories/:id")
-  .put(updateCategory)
-  .delete(deleteCategory)
-  .get(getCategoryById)
+    .put(updateCategory)
+    .delete(deleteCategory)
+    .get(getCategoryById)

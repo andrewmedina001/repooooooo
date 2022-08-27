@@ -12,11 +12,11 @@ export const productsRouter = Router()
 
 productsRouter
   .route("/categories/:id/products")
-  .get(getProducts)
-  .post(postProduct)
+    .get(getProducts)
+    .post(postProduct)
 
 productsRouter
   .route("/categories/:catId/products/:prodId")
-  .put(validateCategoryId, updateProduct)
-  .delete(validateCategoryId, deleteProduct)
-  .get(validateCategoryId, getProductById)
+    .put(validateCategoryId, updateProduct)
+    .delete(validateCategoryId, deleteProduct)
+    .get(validateCategoryId, getProductById)
