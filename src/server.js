@@ -6,8 +6,8 @@ import { productsRouter } from './routes/products.routes.js';
 import { usersRouter } from './routes/users.routes.js';
 import { cartsRouter } from './routes/carts.routes.js';
 import { ordersRouter } from './routes/orders.routes.js';
-import { swaggerRouter } from './routes/swagger.routes.js';
-
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.json' assert {type: 'json'};
 
 // mercadopago.configure({
 //   access_token: process.env.MP_ACCESS_TOKEN,
@@ -28,22 +28,6 @@ app.use(
   })
 )
 
-const options = {
-  definition: {
-      openapi: '3.0.0',
-      info: {
-          title: 'Hello World',
-          version: '1.0.0',
-      },
-  },
-  apis: ['./src/routes*.js'],
-};
-
-const openapiSpecification = swaggerJsdoc(options);
-app.use("/" , swaggerUI.serve, swaggerUI.setup(openapiSpecification))
-
-
-
 app.use(express.json());
 
 app.use(categoriesRouter)
@@ -51,8 +35,8 @@ app.use(productsRouter)
 app.use(usersRouter)
 app.use(cartsRouter)
 app.use(ordersRouter)
-// app.use(swaggerRouter)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.listen(PORT, ()=> {
+app.listen(5000, ()=> {
   console.log(`Server running on port ${PORT}`);
 })
