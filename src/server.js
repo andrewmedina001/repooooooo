@@ -9,10 +9,10 @@ import { ordersRouter } from './routes/orders.routes.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger.json' assert {type: 'json'};
 
-// mercadopago.configure({
-//   access_token: process.env.MP_ACCESS_TOKEN,
-//   integrator_id: process.env.MP_INTEGRATOR_ID
-// })
+mercadopago.configure({
+  access_token: process.env.MP_ACCESS_TOKEN,
+  integrator_id: process.env.MP_INTEGRATOR_ID
+})
 
 
 
@@ -22,7 +22,9 @@ const PORT = process.env.PORT;
 
 app.use(
   cors({
-    origin: [process.env.APP_URL, process.env.ADMIN_APP_URL],
+    origin: ["https://editor.swagger.io"],
+    // origin: ['http:127.0.0.1:8000',"https://editor.swagger.io"],
+    // origin: ['process.env.APP_URL', process.env.ADMIN_APP_URL],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["accept", "authorization", "content-type"]
   })
@@ -37,6 +39,6 @@ app.use(cartsRouter)
 app.use(ordersRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.listen(5000, ()=> {
-  console.log(`Server running on port ${PORT}`);
+app.listen(PORT, ()=> {
+  console.log(`Server running on port ${PORT}. 🏄‍♂️`);
 })

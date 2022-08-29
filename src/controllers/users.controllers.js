@@ -8,6 +8,7 @@ import {
   changePasswordRequestDTO,
   loginRequestDTO,
 } from "../dtos/users.dtos.js";
+
 import { validateEmail, notifyNewPassword } from "../utils/emails.js";
 
 const { compareSync } = bcryptjs;
@@ -33,13 +34,10 @@ export const postUser = async (req, res) => {
   try {
     const { password, ...data } = userRequestDTO(req.body);
     const encryptedPassword = bcryptjs.hashSync(password, 10);
-
     const result = await PrismaConnector.user.create({ 
       data: { ...data, password: encryptedPassword }
     })
-
     const currentDate = new Date();
-
     const token = cryptoJs.AES.encrypt(
       JSON.stringify({
         id: result.id,
@@ -47,12 +45,11 @@ export const postUser = async (req, res) => {
           currentDate.getFullYear(),
           currentDate.getMonth(),
           currentDate.getDate(),
-          currentDate.getHours() + 2
+          currentDate.getHours() + 3
         ),
       }),
       process.env.ENCRYPTION_KEY
     ).toString();
-
     await validateEmail({
       recipient: result.email,
       name: result.name,
@@ -74,6 +71,10 @@ export const postUser = async (req, res) => {
 
 export const validateUser = async (req, res) => {
   const { token } = req.body;
+  console.log("here...")
+  const hola=jwt.verify(token,process.env.ENCRYPTION_KEY);
+  console.log(hola)
+  console.log("termino...")
   try {
     const data = cryptoJs.AES.decrypt(
       token,
@@ -84,10 +85,23 @@ export const validateUser = async (req, res) => {
     if (!data) {
       throw new Error("Invalid token");
     }
+    // console.log("data-...")
+    // console.log("tipo")
+    // const hola=Date(data.expirationDate)
+    // console.log("hola")
+    // console.log(typeof hola)
+    // console.log(typeof +data.expirationDate)
+    // console.log(+data.expirationDate)
+    // const infoToken = JSON.parse(data);
+    // // console.log(infoToken);
+    // console.log("expirationdate-...")
+    // console.log("tipo")
+    
+    // console.log(typeof +infoToken.expirationDate)
+    // console.log(+infoToken.expirationDate)
 
-    const infoToken = JSON.parse(data);
-    // console.log(infoToken);
 
+    // atencion: aqui no esta comparando ya que uno es un string y el otro un objeto 
     if (infoToken.expirationDate < new Date()) {
       throw new Error("Expired token");
     }
@@ -172,7 +186,7 @@ export const login = async (req, res) => {
           message: "Token message",
         },
         process.env.JWT_KEY,
-        { expiresIn: "2h" }
+        { expiresIn: "3h" }
       );
 
       return res.json({

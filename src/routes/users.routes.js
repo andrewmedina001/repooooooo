@@ -13,8 +13,8 @@ export const usersRouter = Router()
 
 usersRouter
   .route("/users")
-  .get(getUsers)
-  .post(postUser)
+    .get(getUsers)
+    .post(postUser)
 
 usersRouter.post("/validate-user", validateUser);
 usersRouter.post("/change-password", changePassword);

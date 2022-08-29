@@ -4,7 +4,6 @@ import { cartRequestDTO } from "../dtos/carts.dtos.js";
 export const postItem = async (req, res) => {
   try {
     const data = cartRequestDTO(req.body);
-
     const { user }  = req;
     const cart = await PrismaConnector.cart.findFirst({
       where: {userId: +user.id},
@@ -43,7 +42,6 @@ export const getItems = async (req, res) => {
     const cartItems = await PrismaConnector.cartItem.findMany({
       where: {cartId: user.cartId},
     })
-
     return res.json(cartItems);
   } catch (error) {
     return res.status(400).json({
