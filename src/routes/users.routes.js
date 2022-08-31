@@ -13,10 +13,10 @@ export const usersRouter = Router()
 
 usersRouter
   .route("/users")
-    .get(getUsers)
-    .post(postUser)
+    .get(getUsers)//listo
+    .post(postUser)//listo
 
-usersRouter.post("/validate-user", validateUser);
-usersRouter.post("/change-password", changePassword);
-usersRouter.post("/login", login);
+usersRouter.post("/validate-user", validateUser);//listo
+usersRouter.post("/change-password", changePassword); //listo
+usersRouter.post("/login", login); 
 usersRouter.get("/profile", validateToken, profile);

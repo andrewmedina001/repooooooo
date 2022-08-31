@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "/"
+      "url": ""
     }
   ],
   "components": {
@@ -545,6 +545,52 @@
         "responses": {
           "200": {
             "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Return All Users",
+        "responses": {
+          "200": {
+            "description": "Succesfull Response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "",
+                  "lastname": "",
+                  "email": "",
+                  "password": "",
+                  "nationality": ""
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Succesfull Response",
             "content": {
               "application/json": {}
             }

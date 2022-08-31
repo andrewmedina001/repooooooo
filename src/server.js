@@ -22,8 +22,8 @@ const PORT = process.env.PORT;
 
 app.use(
   cors({
-    origin: ["https://editor.swagger.io"],
-    // origin: ['http:127.0.0.1:8000',"https://editor.swagger.io"],
+    // origin: ["https://editor.swagger.io"],
+    origin: ["http:127.0.0.1:8000","https://editor.swagger.io"],
     // origin: ['process.env.APP_URL', process.env.ADMIN_APP_URL],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["accept", "authorization", "content-type"]

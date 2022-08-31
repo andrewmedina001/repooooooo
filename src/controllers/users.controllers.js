@@ -69,12 +69,9 @@ export const postUser = async (req, res) => {
   }
 }
 
-export const validateUser = async (req, res) => {
+export const validateUser1 = async (req, res) => {
   const { token } = req.body;
-  console.log("here...")
-  const hola=jwt.verify(token,process.env.ENCRYPTION_KEY);
-  console.log(hola)
-  console.log("termino...")
+  // const hola=jwt.verify(token,process.env.ENCRYPTION_KEY);
   try {
     const data = cryptoJs.AES.decrypt(
       token,
@@ -92,7 +89,7 @@ export const validateUser = async (req, res) => {
     // console.log(typeof hola)
     // console.log(typeof +data.expirationDate)
     // console.log(+data.expirationDate)
-    // const infoToken = JSON.parse(data);
+    const infoToken = JSON.parse(data);
     // // console.log(infoToken);
     // console.log("expirationdate-...")
     // console.log("tipo")
@@ -124,12 +121,59 @@ export const validateUser = async (req, res) => {
       result: null,
     });
   } catch (error) {
+    console.log(error.message);
     return res.status(400).json({
       message: "Something went wrong while validating token",
       result: error.message,
     });
   }
 };
+
+export const validateUser = async (req, res) => {
+  const { token } = req.body;
+  try {
+    const data = cryptoJs.AES.decrypt(
+      token,
+      process.env.ENCRYPTION_KEY
+    ).toString(cryptoJs.enc.Utf8);
+    // console.log(data);
+
+    if (!data) {
+      throw new Error("Invalid token");
+    }
+
+    const infoToken = JSON.parse(data);
+    // console.log(infoToken);
+
+    if (infoToken.expirationDate < new Date()) {
+      throw new Error("Expired token");
+    }
+
+    const user = await PrismaConnector.user.findUniqueOrThrow({
+      where: { id: infoToken.id },
+    });
+
+    if (user.validated) {
+      throw new Error("User already validated");
+    }
+
+    await PrismaConnector.user.update({
+      data: { validated: true },
+      where: { id: infoToken.id },
+    });
+
+    return res.json({
+      message: "User validated successfully",
+      result: null,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: "Something went wrong while validating token",
+      result: error.message,
+    });
+  }
+};
+
 
 export const changePassword = async (req, res) => {
   try {
