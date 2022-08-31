@@ -11,11 +11,11 @@ export const categoriesRouter = Router()
 
 categoriesRouter
   .route("/categories")
-    .get(getCategories)
-    .post(postCategory)
+    .get(getCategories)   //listo
+    .post(postCategory)   //listo
 
 categoriesRouter
-  .route("/categories/:id")
-    .put(updateCategory)
-    .delete(deleteCategory)
-    .get(getCategoryById)
+  .route("/categories/:id") 
+    .put(updateCategory)      //  listo
+    .delete(deleteCategory)   //  No es funcional por que lo impiden las llaves foraneas.
+    .get(getCategoryById)     //  listo

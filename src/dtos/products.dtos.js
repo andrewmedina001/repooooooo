@@ -31,9 +31,9 @@ export const productRequestDTO = (body) => {
   if(!_.isNil(body.prod_img) && !validator.isURL(body.prod_img)){
     errors.push("Required product image url is invalid")
   }
-  if(_.isNil(body.categoryId)){
-    errors.push("Required product category id is missing")
-  }
+  // if(_.isNil(body.categoryId)){
+  //   errors.push("Required product category id is missing")
+  // }
   if(errors.length !== 0){
     throw new Error(errors)
   } else {

@@ -18,8 +18,12 @@ export const getProducts = async (req, res) => {
 
 export const postProduct = async (req, res) => {
   try {
+    const {id} = req.params; // A
     const data = productRequestDTO(req.body)
+    console.log(id)
+    data.categoryId=+id;//A
     console.log(data)
+    
     const result = await PrismaConnector.product.create({data})
     return res.status(201).json({
       message:"Product created successfully",
@@ -35,8 +39,9 @@ export const postProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const {prodId} = req.params;
+    const {prodId,catId} = req.params;
     const data = productRequestDTO(req.body);
+    data.categoryId=+catId;
     const result = await PrismaConnector.product.update({
       data,
       where: {

@@ -18,5 +18,5 @@ usersRouter
 
 usersRouter.post("/validate-user", validateUser);//listo
 usersRouter.post("/change-password", changePassword); //listo
-usersRouter.post("/login", login); 
-usersRouter.get("/profile", validateToken, profile);
+usersRouter.post("/login", login);  // listo
+usersRouter.get("/profile", validateToken, profile); //listo
