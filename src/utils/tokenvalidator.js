@@ -26,7 +26,6 @@ export const validateToken = async (req, res, next) => {
         carts: true,
       }
     });
-
     req.user = user;
     next();
     

@@ -40,7 +40,7 @@ export const getItems = async (req, res) => {
   try {
     const { user } = req;
     const cartItems = await PrismaConnector.cartItem.findMany({
-      where: {cartId: user.cartId},
+      where: {cartId: user.carts[0].id},
     })
     return res.json(cartItems);
   } catch (error) {

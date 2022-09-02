@@ -12,11 +12,11 @@ export const cartsRouter = Router()
 cartsRouter
   .route("/cart")
     .all(validateToken)
-      .get(getItems)
-      .post(postItem)
+      .get(getItems)    //
+      .post(postItem)   //
 
 cartsRouter
   .route("/cart/:itemId")
-    .all(validateToken)
-      .delete(deleteItem)
-      .put(updateItem)
+    .all(validateToken)     //
+      .delete(deleteItem)   //
+      .put(updateItem)      //

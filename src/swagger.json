@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": ""
+      "url": "http:127.0.0.1:8000"
     }
   ],
   "components": {
@@ -42,10 +42,15 @@
   "paths": {
     "/cart": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Carts"
         ],
-        "summary": "Return Carts by user token",
+        "summary": "Return Carts by User Token",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -56,6 +61,11 @@
         }
       },
       "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Carts"
         ],
@@ -66,17 +76,15 @@
               "schema": {
                 "type": "object",
                 "example": {
-                  "userdId": "userId"
+                  "productId": 1,
+                  "quantity": 1,
+                  "size": "",
+                  "color": ""
                 }
               }
             }
           }
         },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "responses": {
           "201": {
             "description": "Successful response",
@@ -151,7 +159,7 @@
         "tags": [
           "Categories"
         ],
-        "summary": "Devolver",
+        "summary": "Return All Categories",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -165,14 +173,16 @@
         "tags": [
           "Categories"
         ],
-        "summary": "Crear carta",
+        "summary": "Create Category",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "example": {
-                  "userdId": "userId"
+                  "cat_name": "",
+                  "cat_desc": "",
+                  "cat_img": ""
                 }
               }
             }
@@ -196,7 +206,8 @@
           "description": "Unique identifier of the group.",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "integer",
+            "format": "int64"
           }
         }
       ],
@@ -204,7 +215,7 @@
         "tags": [
           "Categories"
         ],
-        "summary": "Devolver",
+        "summary": "Return Category by ID",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -225,13 +236,9 @@
               "schema": {
                 "type": "object",
                 "example": {
-                  "productId": "productId",
-                  "quantity": "quantity",
-                  "size": "size",
-                  "color": "color",
-                  "user": {
-                    "hola": "hola"
-                  }
+                  "cat_name": "",
+                  "cat_desc": "",
+                  "cat_img": ""
                 }
               }
             }
@@ -250,7 +257,7 @@
         "tags": [
           "Categories"
         ],
-        "summary": "Delete categorie by ID",
+        "summary": "Delete Category by ID",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -290,22 +297,23 @@
       }
     },
     "/categories/{id}/products": {
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "description": "Unique identifier of the group.",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
       "get": {
         "tags": [
           "Products"
         ],
-        "summary": "Devolver",
+        "summary": "Return All Products by Category ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the group.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -319,14 +327,33 @@
         "tags": [
           "Products"
         ],
-        "summary": "Place Order",
+        "summary": "Create Product in the ID indicated by category",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the group.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "example": {
-                  "userdId": "userId"
+                  "prod_name": "",
+                  "prod_type": "",
+                  "prod_size": "",
+                  "prod_color": "",
+                  "prod_price": "",
+                  "prod_topic": "",
+                  "prod_designer": "",
+                  "prod_img": ""
                 }
               }
             }
@@ -350,7 +377,8 @@
           "description": "Unique identifier of the group.",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "integer",
+            "format": "int64"
           }
         },
         {
@@ -359,7 +387,8 @@
           "description": "Unique identifier of the group.",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "integer",
+            "format": "int64"
           }
         }
       ],
@@ -381,20 +410,21 @@
         "tags": [
           "Products"
         ],
-        "summary": "Update Category by ID",
+        "summary": "Update Product",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "example": {
-                  "productId": "productId",
-                  "quantity": "quantity",
-                  "size": "size",
-                  "color": "color",
-                  "user": {
-                    "hola": "hola"
-                  }
+                  "prod_name": "",
+                  "prod_type": "",
+                  "prod_size": "",
+                  "prod_color": "",
+                  "prod_price": "",
+                  "prod_topic": "",
+                  "prod_designer": "",
+                  "prod_img": ""
                 }
               }
             }
@@ -413,7 +443,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Delete categorie by ID",
+        "summary": "Delete Product",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -457,22 +487,22 @@
         "tags": [
           "Users"
         ],
-        "summary": "Notifications mercado pago test",
+        "summary": "Validate User",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "example": {
-                  "userdId": "userId"
+                  "token": ""
                 }
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "Successful response",
+          "200": {
+            "description": "Succesfull Response",
             "content": {
               "application/json": {}
             }
@@ -492,14 +522,16 @@
               "schema": {
                 "type": "object",
                 "example": {
-                  "userdId": "userId"
+                  "email": "",
+                  "currentPassword": "",
+                  "newPassword": ""
                 }
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful response",
             "content": {
               "application/json": {}
@@ -513,14 +545,15 @@
         "tags": [
           "Users"
         ],
-        "summary": "Notifications mercado pago test",
+        "summary": "Return JWT",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "example": {
-                  "userdId": "userId"
+                  "email": "",
+                  "password": ""
                 }
               }
             }
@@ -542,6 +575,11 @@
           "Users"
         ],
         "summary": "Devolver product by ID and category ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
