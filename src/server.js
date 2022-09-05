@@ -35,8 +35,8 @@ app.use(express.json());
 app.use(categoriesRouter)
 app.use(productsRouter)
 app.use(usersRouter)
-app.use(cartsRouter)
-app.use(ordersRouter)
+// app.use(cartsRouter)
+// app.use(ordersRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(PORT, ()=> {
