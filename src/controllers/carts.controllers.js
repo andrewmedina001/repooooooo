@@ -54,17 +54,17 @@ export const getItems = async (req, res) => {
 export const updateItem = async (req, res) => {
   try {
     const data = cartRequestDTO(req.body);
-
     const { user }  = req;
     const {itemId} = req.params
 
+    // Primero verificar si el item pertenece a su carrito
+        // Sino pertenece indicarle por mensaje
     const cart = await PrismaConnector.cart.findFirstOrThrow({
       where: {userId: +user.id},
       include: {
         cartItems: true
       }
     })
-
     const cartItem = await PrismaConnector.cartItem.update({
       data: {...data, cartId: cart.id},
       where: {

@@ -20,10 +20,9 @@ export const postProduct = async (req, res) => {
   try {
     const {id} = req.params; // A
     const data = productRequestDTO(req.body)
-    console.log(id)
+    // console.log(id)
     data.categoryId=+id;//A
-    console.log(data)
-    
+    // console.log(data)
     const result = await PrismaConnector.product.create({data})
     return res.status(201).json({
       message:"Product created successfully",

@@ -90,6 +90,10 @@ export const validateUser1 = async (req, res) => {
     // console.log(typeof +data.expirationDate)
     // console.log(+data.expirationDate)
     const infoToken = JSON.parse(data);
+    console.log("Holaaaa")
+    console.log(infoToken)
+    console.log("Nooooooo")
+    console.log(newDate())
     // // console.log(infoToken);
     // console.log("expirationdate-...")
     // console.log("tipo")
@@ -144,6 +148,13 @@ export const validateUser = async (req, res) => {
 
     const infoToken = JSON.parse(data);
     // console.log(infoToken);
+    console.log("Tipo de dato de infoToken.expirationDate ")
+    console.log(typeof infoToken.expirationDate)
+    console.log("Tipo de dato de new Date()")
+    console.log(typeof new Date())
+    if(infoToken.expirationDate < new Date()) console.log("es menor")
+    if(infoToken.expirationDate > new Date()) console.log("es mayor")
+    else console.log("no entro a ninguna")
 
     if (infoToken.expirationDate < new Date()) {
       throw new Error("Expired token");
