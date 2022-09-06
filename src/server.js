@@ -23,7 +23,7 @@ const PORT = process.env.PORT;
 app.use(
   cors({
     // origin: ["https://editor.swagger.io"],
-    origin: ["http:127.0.0.1:8000","https://editor.swagger.io"],
+    origin: [process.env.APP_URL, process.env.ADMIN_APP_URL,"http:127.0.0.1:8000","https://editor.swagger.io"],
     // origin: ['process.env.APP_URL', process.env.ADMIN_APP_URL],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["accept", "authorization", "content-type"]
@@ -35,8 +35,8 @@ app.use(express.json());
 app.use(categoriesRouter)
 app.use(productsRouter)
 app.use(usersRouter)
-// app.use(cartsRouter)
-// app.use(ordersRouter)
+app.use(cartsRouter)
+app.use(ordersRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(PORT, ()=> {
